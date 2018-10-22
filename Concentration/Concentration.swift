@@ -10,6 +10,7 @@ import Foundation
 
 class Concentration
 {
+    var score = 0
     var cards = [Card]()
     
     var indexOfOneAndOnlyFaceUpCard: Int?
@@ -20,6 +21,14 @@ class Concentration
                 if cards[matchIndex].identifier == cards[index].identifier {
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
+                    score += 2
+                } else {
+                    if cards[matchIndex].isSeen {
+                        score -= 1
+                    }
+                    if cards[index].isSeen {
+                        score -= 1
+                    }
                 }
                 cards[index].isFaceUp = true
                 indexOfOneAndOnlyFaceUpCard = nil
@@ -39,6 +48,8 @@ class Concentration
             cards += [card,card]
         }
         // TODO: Shuffle the cards
+        cards.sort { _,_ in arc4random_uniform(2) > 0 }
+
     }
     
 }
